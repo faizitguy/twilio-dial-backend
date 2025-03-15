@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "b8e9c8a0-5b1a-4b8e-9b0a-9b0a9b0a9b0a",
+		"name": "Twilio Hapi Backend",
+		"description": "Collection for testing the Hapi.js backend with Twilio integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Check Auth Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/check-auth",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"check-auth"
+							]
+						},
+						"description": "Check if the user is currently authenticated. Returns authentication status and user details if authenticated."
+					}
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"testuser\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\",\n    \"phoneNumber\": \"+1234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"register"
+							]
+						},
+						"description": "Register a new user"
+					}
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Login with existing user credentials"
+					}
+				},
+				{
+					"name": "Logout User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						},
+						"description": "Logout the current user"
+					}
+				}
+			]
+		},
+		{
+			"name": "Calls",
+			"item": [
+				{
+					"name": "Initiate Call",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phoneNumber\": \"+1234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/initiateCall",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"initiateCall"
+							]
+						},
+						"description": "Initiate a call to the specified phone number. The response will include a callSid that you can use to end the call."
+					}
+				},
+				{
+					"name": "End Call",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"callSid\": \"CA1234567890abcdef1234567890abcdef\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/endCall",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"endCall"
+							]
+						},
+						"description": "End an ongoing call using the call SID. The callSid must start with 'CA' followed by 32 hexadecimal characters. You can get this callSid from the initiateCall response."
+					}
+				},
+				{
+					"name": "Get Call History",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/calls/history?page=1&limit=10&status=completed&startDate=2024-03-01T00:00:00Z&endDate=2024-03-15T23:59:59Z",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"calls",
+								"history"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Number of records per page (default: 10, max: 100)"
+								},
+								{
+									"key": "status",
+									"value": "completed",
+									"description": "Filter by call status (optional)"
+								},
+								{
+									"key": "startDate",
+									"value": "2024-03-01T00:00:00Z",
+									"description": "Filter calls after this date (ISO format, optional)"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-03-15T23:59:59Z",
+									"description": "Filter calls before this date (ISO format, optional)"
+								}
+							]
+						},
+						"description": "Get call history for the logged-in user with pagination and filtering options. All query parameters are optional."
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
